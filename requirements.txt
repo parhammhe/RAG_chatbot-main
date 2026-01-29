@@ -1,16 +1,15 @@
 fastapi
-uvicorn
-openai
-langchain
-langchain_text_splitters
-chromadb
+uvicorn[standard]
+gunicorn
+sqlalchemy[asyncio]
+psycopg[binary]
+pgvector
+boto3
+python-jose[cryptography]
+passlib[bcrypt]
 pypdf
-python-dotenv
-tiktoken
-langchain-community
-langchain-openai
-langchain_chroma
+openai
 python-multipart
+python-dotenv
 pydantic
-# pytest
-# pytest-asyncio
+pydantic[email]
