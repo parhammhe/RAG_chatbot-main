@@ -15,7 +15,7 @@ This document outlines the **exact, sequential details** to perform in the AWS C
     2.  Select **Other type of secret**.
     3.  **Key/Value Pairs:**
         *   Key: `OPENAI_API_KEY`
-        *   Value: `[YOUR-OPENAI-KEY]`
+        *   Value: `[YOUR-OPENAI-KEY]` (See [`app/config.py:31`](https://github.com/parhammhe/RAG_chatbot-main/blob/main/app/config.py#L31))
     4.  **Secret Name:** `sand-openai-api`
     5.  **Description:** API Key for OpenAI used by RAG Chatbot.
 
@@ -118,7 +118,7 @@ This document outlines the **exact, sequential details** to perform in the AWS C
         *   Key: `DB_PASSWORD`
         *   Value: `[GENERATE-STRONG-PASSWORD]` (e.g., `SuperSecureRagDbPass2026!`)
     4.  **Secret Name:** `sand-db-password`
-    5.  **Description:** Master password for RDS Postgres.
+    5.  **Description:** Master password for RDS Postgres. (Used in [`app/db.py:12`](https://github.com/parhammhe/RAG_chatbot-main/blob/main/app/db.py#L12) via `DATABASE_URL`)
 
 ### **Step 5.2: Launch RDS Postgres**
 *   **Service:** RDS
@@ -185,10 +185,10 @@ This document outlines the **exact, sequential details** to perform in the AWS C
     3.  **Deployment Settings:** Automatic (optional).
     4.  **Configuration:**
         *   **Environment Variables:**
-            *   `DB_HOST` = [RDS Endpoint from Step 5.2]
-            *   `AWS_S3_BUCKET` = [Bucket Name from Step 6]
-            *   `JWT_SECRET` = [GENERATE-RANDOM-STRING] (e.g., `my-super-secret-jwt-key-change-me`)
-            *   `API_GATEWAY_HEADER_SECRET` = [GENERATE-RANDOM-STRING] (e.g., `secure-handshake-token-123`)
+            *   `DB_HOST` = [RDS Endpoint from Step 5.2] (See [`app/config.py:14`](https://github.com/parhammhe/RAG_chatbot-main/blob/main/app/config.py#L14))
+            *   `AWS_S3_BUCKET` = [Bucket Name from Step 6] (See [`app/config.py:20`](https://github.com/parhammhe/RAG_chatbot-main/blob/main/app/config.py#L20))
+            *   `JWT_SECRET` = [GENERATE-RANDOM-STRING] (See [`app/config.py:26`](https://github.com/parhammhe/RAG_chatbot-main/blob/main/app/config.py#L26))
+            *   `API_GATEWAY_HEADER_SECRET` = [GENERATE-RANDOM-STRING] (See [`app/config.py:36`](https://github.com/parhammhe/RAG_chatbot-main/blob/main/app/config.py#L36))
         *   **Secrets (from Secrets Manager):**
             *   `OPENAI_API_KEY` = `sand-openai-api:OPENAI_API_KEY`
             *   `DB_PASSWORD` = `sand-db-password:DB_PASSWORD`
@@ -212,7 +212,7 @@ This document outlines the **exact, sequential details** to perform in the AWS C
         *   Endpoint URL: [App Runner URL from Step 8] + `/{proxy}`
     5.  **Integration Request > HTTP Headers:**
         *   Name: `X-From-ApiGateway`
-        *   Mapped from: `'[VALUE-FROM-STEP-8-ENV-VAR]'` (Must match `API_GATEWAY_HEADER_SECRET`).
+        *   Mapped from: `'[VALUE-FROM-STEP-8-ENV-VAR]'` (See [`app/main.py:63`](https://github.com/parhammhe/RAG_chatbot-main/blob/main/app/main.py#L63))
 
 ### **Step 10: WAF**
 *   **Service:** WAF & Shield
